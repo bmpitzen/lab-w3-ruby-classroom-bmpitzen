@@ -26,8 +26,7 @@ end
 # TIP: To convert an array like [[:indiana, 90], [:nevada, 80]] to a hash,
 # use .to_h. Also look at Hash#transform_values.
 def averages(data)
-
-
+    data.transform_values { |scores| (scores.sum/scores.length) }
 end
 
 # Return a letter grade for a numerical score.
@@ -37,13 +36,27 @@ end
 # 60-69 => D
 # < 60 => F
 def letter_grade(score)
+    if score >= 90 
+       return  "A"
+    elsif score >= 80
+        "B"
+    elsif score >= 70
+        "C"
+    elsif score >= 60
+        "D"
+    else 
+        "F"
+end
 end
 
 # Return a hash of students and their final letter grade, as determined
 # by their average.
-def final_letter_grades(data)
+def final_letter_grades(scores)
+    averages(scores).transform_values { |avg_score| letter_grade(avg_score)}
 end
 
 # Return the average for the entire class.
 def class_average(data)
+    ind_avgs = averages(data).values
+    ind_avgs.sum/ind_avgs.length
 end
